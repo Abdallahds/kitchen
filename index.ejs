@@ -1,0 +1,36 @@
+<%- include("./header") %>
+
+<div class="text">
+    <h1 class="mainHeader">
+        Find Me a meal.
+    </h1>
+    
+    <p class="reason">
+        this is a study project , you can search for a meal using the free meal api (the mealdb.com)
+    </p>
+</div>
+
+
+<form action="/search" method="post" class="searchForm">
+    <div>
+        <label for="ingredient">Main ingredient</label>
+        <input type="text" name="ingredient" id="">   
+    </div>
+    <button type="submit" class="searchButton">Search</button>
+</form>
+
+<hr>
+
+<div class="showDiv">   
+        <% if(meals) { meals.forEach(element =>{ %>
+            <div class="meal">
+                <img src="<%= element.strMealThumb %>" class="mealImg" alt="Meal Image">
+                <h1 class=""mealName><%= element.strMeal %></h1>
+                <a href="#" id="<%= element.idMeal %>" class="mealLink">More Details</a>
+            </div>
+       <% }) }%>
+
+</div>
+
+
+<%- include("./footer") %>
