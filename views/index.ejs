@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find A Meal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="text">
+    <h1 class="mainHeader">
+        Find Me a meal.
+    </h1>
+    
+    <p class="reason">
+        this is a study project , you can search for a meal using the free meal api (the mealdb.com)
+    </p>
+</div>
+
+
+<form action="/search" method="post" class="searchForm">
+    <div>
+        <label for="ingredient">Main ingredient</label>
+        <input type="text" name="ingredient" id="">   
+    </div>
+    <button type="submit" class="searchButton">Search</button>
+</form>
+
+<hr>
+
+<div class="showDiv">   
+        <% if(meals) { meals.forEach(element =>{ %>
+            <div class="mealList">
+                <img src="<%= element.strMealThumb %>" class="mealImg" alt="Meal Image">
+                <h1 class="mealName" class="mealName"><%= element.strMeal %></h1>
+                <form action="/mealDetails" method="post">
+                    <button type="submit" name="moreDetails" value="<%= element.idMeal %>" class="moreDetails">
+                        More Details
+                    </button>
+                </form>
+                
+            </div>
+       <% }) }%>
+</div>
+
+
+<div class="footer">
+    <h1>abdallah alazam</h1>
+</div>
+</body>
+</html>

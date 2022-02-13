@@ -1,19 +1,14 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const { redirect } = require("express/lib/response");
+import express from "express";
+import bodyParser from "body-parser";
+import fetch from "node-fetch";
 const app = express();
-// const fetch = require("node-fetch");
-const request = require("request");
-
-
-let url = "https://www.themealdb.com/api/json/v1/1/filter.php?i=";
-
-let meals = [];
-
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.set('views', './views');
 app.set("view engine", "ejs");
+
+let url = "https://www.themealdb.com/api/json/v1/1/filter.php?i=";
+let mealUrl = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
 
 app.listen(3000, () => {
     console.log("this server is on using port 3000");
@@ -21,34 +16,19 @@ app.listen(3000, () => {
 
 
 app.get("/", (req, res) => {
-    res.render(__dirname + "/index.ejs", { meals: [] });
+    res.render("index.ejs", { meals: [] });
 });
 
-const fetchData = async (ingredient) => {
-    try {
-        request(url + ingredient, { json: true }, async (error, res, body) => {
-            if (error) {
-                console.log(error);
-            }
-            else if (res.statusCode == 200) {
-                meals = await body;
-            }
-        });
-    }
-    catch (error) {
-        console.log(error)
-    }
-}
+
+app.post("/search", async (req, res) => {
+    const response = await fetch(url + req.body.ingredient);
+    const data = await response.json();
+    res.render("index.ejs", { meals: await data.meals });
+})
 
 
-app.post("/search", (req, res) => {
-    fetchData(req.body.ingredient);
-    res.render(__dirname + "/index.ejs", { meals: meals.meals });
-
-    // const response = await fetch(url + req.body.ingredient, {
-    //     method: 'get',
-    //     body: JSON.stringify(body),
-    //     headers: { 'Content-Type': 'application/json' }
-    // });
-    // const data = await response.json();
+app.post("/mealDetails", async (req, res) => {
+    const response = await fetch(mealUrl + req.body.moreDetails);
+    const data = await response.json();
+    res.render("meal.ejs", { meal: await data.meals });
 })

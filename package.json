@@ -2,7 +2,8 @@
   "name": "7.kitchen-material",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,8 +13,6 @@
     "body-parser": "^1.19.1",
     "ejs": "^3.1.6",
     "express": "^4.17.2",
-    "node-fetch": "^3.2.0",
-    "request": "^2.88.2",
-    "sass": "^1.49.7"
+    "node-fetch": "^3.2.0"
   }
 }
